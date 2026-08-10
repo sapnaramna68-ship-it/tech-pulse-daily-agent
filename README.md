@@ -13,8 +13,8 @@ answer questions like *"what did you post yesterday?"*
 
 🔗 **Live:** [@techpulse_daily_bot](https://t.me/techpulse_daily_bot) on Telegram — running 24/7 on Railway
 
+<img width="400" height="214" alt="633574602-d7df138b-4fbd-4fa4-9d0b-13f0f2f6e10d" src="https://github.com/user-attachments/assets/9de247a3-11fb-45ba-a617-78fa83ed0645" />
 
-https://github.com/user-attachments/assets/d7df138b-4fbd-4fa4-9d0b-13f0f2f6e10d
 
 
 ## ✨ What it does

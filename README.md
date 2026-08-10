@@ -13,6 +13,10 @@ answer questions like *"what did you post yesterday?"*
 
 🔗 **Live:** [@techpulse_daily_bot](https://t.me/techpulse_daily_bot) on Telegram — running 24/7 on Railway
 
+
+https://github.com/user-attachments/assets/d7df138b-4fbd-4fa4-9d0b-13f0f2f6e10d
+
+
 ## ✨ What it does
 
 The agent handles a Telegram channel the way a real (very dedicated)

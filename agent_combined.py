@@ -439,7 +439,7 @@ def chat_loop():
 # ek port par sunta hai). Isliye hum ek chhota Flask server bana rahe hain
 # jo bas "Bot is running!" dikhata hai - asli kaam (scheduler + chat) 
 # background threads mein chalta hai.
-from flask import Flask
+from flask import Flask, request
 
 app = Flask(__name__)
 
@@ -447,6 +447,22 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     return "Tech Pulse Daily agent is running! 🚀"
+
+
+# ---- Cronjob se trigger karne wala route ----
+# Ek external free cronjob service (jaise cron-job.org) is URL ko roz
+# ek fixed time par call karega, taaki daily post redeploy hone par
+# bhi kabhi miss na ho (in-process scheduler se zyada reliable hai).
+CRON_SECRET = os.getenv("CRON_SECRET", "changeme123")
+
+
+@app.route("/trigger-daily-post")
+def trigger_daily_post():
+    secret = request.args.get("secret")
+    if secret != CRON_SECRET:
+        return "Unauthorized", 401
+    threading.Thread(target=run_daily_post, daemon=True).start()
+    return "Daily post triggered! ✅"
 
 
 # ==================== MAIN: SAB EK SAATH CHALAO ====================

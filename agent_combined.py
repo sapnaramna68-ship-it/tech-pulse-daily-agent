@@ -129,7 +129,7 @@ def get_user_context(chat_id):
     return ""
 
 
-def groq_chat(messages, max_tokens=500, model="llama-3.3-70b-versatile"):
+def groq_chat(messages, max_tokens=500, model="openai/gpt-oss-120b"):
     url = "https://api.groq.com/openai/v1/chat/completions"
     headers = {"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"}
     payload = {"model": model, "messages": messages, "max_tokens": max_tokens}
@@ -434,11 +434,31 @@ def chat_loop():
             time.sleep(5)
 
 
-# ==================== MAIN: DONO EK SAATH CHALAO ====================
+# ==================== RENDER KE LIYE CHHOTA WEB SERVER ====================
+# Render free tier sirf "Web Service" ko free mein chalane deta hai (jo
+# ek port par sunta hai). Isliye hum ek chhota Flask server bana rahe hain
+# jo bas "Bot is running!" dikhata hai - asli kaam (scheduler + chat) 
+# background threads mein chalta hai.
+from flask import Flask
+
+app = Flask(__name__)
+
+
+@app.route("/")
+def home():
+    return "Tech Pulse Daily agent is running! 🚀"
+
+
+# ==================== MAIN: SAB EK SAATH CHALAO ====================
 if __name__ == "__main__":
     print("=== Tech Pulse Daily - Combined Agent Starting ===")
 
     scheduler_thread = threading.Thread(target=scheduler_loop, daemon=True)
     scheduler_thread.start()
 
-    chat_loop()  # Ye main thread mein chalega
+    chat_thread = threading.Thread(target=chat_loop, daemon=True)
+    chat_thread.start()
+
+    # Render environment variable PORT provide karta hai - use hi use karo
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
